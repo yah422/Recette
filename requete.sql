@@ -30,6 +30,7 @@ WHERE nom_recette LIKE '%salade%';
 5. Insérer une nouvelle recette : « Pâtes à la carbonara » dont la durée de réalisation est de 20 min avec les instructions de votre choix. Pensez à alimenter votre base de données en conséquence afin de pouvoir lister les détails de cette recettes (ingrédients)
 
 INSERT INTO recette (nom_recette,tpsPrep_recette,instruction_recette) VALUES ("pate carbonara", 20, "faire cuire les pates et ajouter la creme fraiche et les lardons");
+INSERT INTO contenir (id_recette, id_ingredient, quantite) VALUES (55, 6, 3);
 
 6. Modifier le nom de la recette ayant comme identifiant id_recette = 3 (nom de la recette à votre convenance)
 
@@ -92,9 +93,12 @@ SET tpsPrep_recette = tpsPrep_recette -5
 
 15. Afficher les recettes qui ne nécessitent pas d’ingrédients coûtant plus de 2€ par unité de mesure
 
-SELECT *
+SELECT nom_ingredient
 FROM ingredient
-WHERE prix_ingredient <=2
+WHERE id_ingredient NOT IN (
+SELECT id_ingredient
+FROM contenir
+WHERE contenir.id_ingredient = ingredient.id_ingredient)
 
 16. Afficher la / les recette(s) les plus rapides à préparer
 
